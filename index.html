@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>hlsdownloader by nmrony</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">hlsdownloader</h1>
+      <h2 class="project-tagline">Downloads HLS Playlist file and TS chunks</h2>
+      <a href="https://github.com/nmrony/hlsdownloader" class="btn">View on GitHub</a>
+      <a href="https://github.com/nmrony/hlsdownloader/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/nmrony/hlsdownloader/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="hlsdownloader" class="anchor" href="#hlsdownloader" aria-hidden="true"><span class="octicon octicon-link"></span></a>HLSDownloader</h1>
+
+<p><a href="https://www.npmjs.com/package/hlsdownloader"><img src="https://img.shields.io/npm/v/hlsdownloader.svg?style=flat-square" alt="version"></a> <a href="https://www.npmjs.com/package/hlsdownloader"><img src="https://img.shields.io/david/nmrony/hlsdownloader.svg?style=flat-square" alt="dependencies"></a> <a href="https://www.npmjs.com/package/hlsdownloader"><img src="https://img.shields.io/david/dev/nmrony/hlsdownloader.svg?style=flat-square" alt="devDependencies"></a> <a href="https://www.npmjs.com/package/hlsdownloader"><img src="https://img.shields.io/npm/dm/hlsdownloader.svg?style=flat-square" alt="Downloads"></a></p>
+
+<p>Downloads <code>m3u8</code> playlist and <code>TS</code> chunks for a given playlist URL.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install it via <code>npm</code></p>
+
+<div class="highlight highlight-source-shell"><pre>[sudo] npm install hlsdownloader</pre></div>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p><code>destination</code> field is optional. If <code>destination</code> is not provided it just fetches the content from origin.
+It can also be useful if you want to do content pre-fetching from CDN for your end viewers. If any <code>TS</code> or <code>m3u8</code>
+ variant download is failed it continues downloading others and reports after finishing.</p>
+
+<p>It's simple as below.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> HLSDownloader <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>hlsdownloader<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> params <span class="pl-k">=</span> {
+      playlistURL<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http://example.com/hls/playlist.m3u8<span class="pl-pds">'</span></span>,
+      destination<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>/tmp<span class="pl-pds">'</span></span>
+};
+<span class="pl-k">var</span> downloader <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">HLSDownloader</span>(params);
+downloader.startDownload(<span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">msg</span>) {
+   <span class="pl-k">if</span> (err) {
+     <span class="pl-k">return</span> <span class="pl-en">console</span>.<span class="pl-c1">log</span>(err);
+   }
+   <span class="pl-en">console</span>.<span class="pl-c1">log</span>(msg);
+});</pre></div>
+
+<p><code>msg</code> is an object with following properties</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">//on success</span>
+{
+message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Downloaded successfully<span class="pl-pds">'</span></span>,
+playlistURL<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>your playlist url<span class="pl-pds">'</span></span>
+}
+<span class="pl-c">//on partial download</span>
+{
+message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Download done with some errors<span class="pl-pds">'</span></span>,
+playlistURL<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>your playlist url<span class="pl-pds">'</span></span>,
+errors<span class="pl-k">:</span> [] <span class="pl-c">// items url that is skipped or could not downloaded for error</span>
+}</pre></div>
+
+<p>I will be grateful if you all help me to improve this package by giving your suggestions, feature request and
+pull requests. I am all ears!!</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/nmrony/hlsdownloader">hlsdownloader</a> is maintained by <a href="https://github.com/nmrony">nmrony</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
