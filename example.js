@@ -2,7 +2,10 @@ import HLSDownloader from 'hlsdownloader' // Using ES2015 module
 // var HLSDownloader = require('hlsdownloader').downloader //using commonJS module
 
 const params = {
-  playlistURL: 'http://exmple.com/hls/playlist.m3u8', // change it
+  playlistURL: 'http://example.com/hls/playlist.m3u8', // change it
+  headers: {
+    'Authorization': 'Basic hashstring'
+  },
   destination: '/tmp' // change it
 }
 const downloader = new HLSDownloader(params)

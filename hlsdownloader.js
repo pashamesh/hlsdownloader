@@ -93,6 +93,7 @@ class HLSDownloader {
     this.hostName = urls.hostname
     this.items = []
     this.errors = []
+    this.headers = playlistInfo.headers || []
   }
 
   /**
@@ -111,8 +112,12 @@ class HLSDownloader {
    */
   getPlaylist (callback) {
     const self = this
+    const options = {
+      url: self.playlistURL,
+      headers: self.headers
+    }
 
-    request.get(self.playlistURL).then((body) => {
+    request.get(options).then((body) => {
       if (!isValidPlaylist(body)) {
         return callback(new Error("This playlist isn't a valid m3u8 playlist"))
       }
@@ -137,6 +142,9 @@ class HLSDownloader {
    */
   parseMasterPlaylist (playlistContent, callback) {
     const self = this
+    var options = {
+      headers: self.headers
+    }
 
     if (playlistContent.match(/^#EXT-X-TARGETDURATION:\d+/im)) {
       this.parseVariantPlaylist(playlistContent)
@@ -151,7 +159,8 @@ class HLSDownloader {
 
         each(variants, (item, cb) => {
           const variantUrl = url.resolve(self.playlistURL, item)
-          request.get(variantUrl).then(body => {
+          options.url = variantUrl
+          request.get(options).then(body => {
             if (isValidPlaylist(body)) {
               self.items.push(variantUrl)
               self.parseVariantPlaylist(body)
@@ -202,9 +211,13 @@ class HLSDownloader {
    */
   downloadItems (callback) {
     const self = this
+    var options = {
+      headers: self.headers
+    }
 
     each(this.items, (variantUrl, cb) => {
-      request.get(variantUrl).then(downloadedItem => {
+      options.url = variantUrl
+      request.get(options).then(downloadedItem => {
         if (self.destination !== null &&
           self.destination !== '' &&
           self.destination !== 'undefined') {
